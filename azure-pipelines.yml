@@ -29,8 +29,8 @@ jobs:
 
     - task: PublishPipelineArtifact@1
       inputs:
-        pathToPublish: $(System.DefaultWorkingDirectory)/build-windows-x86_32
-        artifactName: WebRTC-static-windows-final-x86_32
+        path: $(System.DefaultWorkingDirectory)/build-windows-x86_32
+        artifact: WebRTC-static-windows-final-x86_32
 
     #- task: PublishPipelineArtifact@1
     #  inputs:
