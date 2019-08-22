@@ -15,7 +15,7 @@ variables:
 jobs:
   - job: BuildWebRTC
     displayName: 'Building WebRTC'
-    pool: 'LiquidSkyStream'
+    pool: 'Default'
     timeoutInMinutes: 240
     steps:
     - script: echo Hello, world!
