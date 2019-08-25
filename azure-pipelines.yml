@@ -66,4 +66,16 @@ jobs:
       CleanTargetFolder: true
       preserveTimestamp: true
     
+    - task: NuGetCommand@2
+      inputs:
+      command: 'pack'
+      versioningScheme: byPrereleaseNumber
+      packagesToPack: $(System.DefaultWorkingDirectory)/LiquidSky.WebRTC.Static.Build.nuspec
     
+    - task: NuGetCommand@2
+      displayName: 'NuGet push'
+      inputs:
+      command: push
+      publishVstsFeed: 'WebRTC-build-feed'
+      allowPackageConflicts: true
+
