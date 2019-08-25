@@ -11,7 +11,6 @@ variables:
   Minor: '1'
   Patch: '0'
 
-
 jobs:
   - job: BuildWebRTC
     displayName: 'Building WebRTC'
@@ -39,43 +38,43 @@ jobs:
         
     - task: CopyFiles@2
       inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/include'
-      Contents: '**'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/include'
-      CleanTargetFolder: true
-      preserveTimestamp: true
+        SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/include'
+        Contents: '**'
+        TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/include'
+        CleanTargetFolder: true
+        preserveTimestamp: true
       
       
     - task: CopyFiles@2
       inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/lib'
-      Contents: 
-        webrtc.lib
-        webrtc-common.lib
-      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/Win32/Release'
-      CleanTargetFolder: true
-      preserveTimestamp: true
+        SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/lib'
+        Contents: 
+          webrtc.lib
+          webrtc-common.lib
+        TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/Win32/Release'
+        CleanTargetFolder: true
+        preserveTimestamp: true
     
     - task: CopyFiles@2
       inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_64/lib'
-      Contents: 
-        webrtc.lib
-        webrtc-common.lib
-      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/x64/Release'
-      CleanTargetFolder: true
-      preserveTimestamp: true
+        SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_64/lib'
+        Contents: 
+          webrtc.lib
+          webrtc-common.lib
+        TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/x64/Release'
+        CleanTargetFolder: true
+        preserveTimestamp: true
     
     - task: NuGetCommand@2
       inputs:
-      command: 'pack'
-      versioningScheme: byPrereleaseNumber
-      packagesToPack: $(System.DefaultWorkingDirectory)/LiquidSky.WebRTC.Static.Build.nuspec
+        command: 'pack'
+        versioningScheme: byPrereleaseNumber
+        packagesToPack: $(System.DefaultWorkingDirectory)/LiquidSky.WebRTC.Static.Build.nuspec
     
     - task: NuGetCommand@2
       displayName: 'NuGet push'
       inputs:
-      command: push
-      publishVstsFeed: 'WebRTC-build-feed'
-      allowPackageConflicts: true
+        command: push
+        publishVstsFeed: 'WebRTC-build-feed'
+        allowPackageConflicts: true
 
