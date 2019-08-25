@@ -24,28 +24,46 @@ jobs:
     - script: envWin32.bat && python webrtc.py
       displayName: 'Generating 32-bit artifacts'
 
-    #- script: envWin64.bat && python webrtc.py
-    #  displayName: 'Generating 64-bit artifacts'
+    - script: envWin64.bat && python webrtc.py
+      displayName: 'Generating 64-bit artifacts'
 
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(System.DefaultWorkingDirectory)/build-windows-x86_32
-        artifact: WebRTC-static-windows-final-x86_32
-    - task: PublishBuildArtifacts@1
+        artifact: WebRTC-static-windows-x86_32
+    
+    - task: PublishPipelineArtifact@1
       inputs:
-        pathToPublish: $(System.DefaultWorkingDirectory)/build-windows-x86_32
-        artifactName: WebRTC-static-windows-final-x86_32
-
-    #- task: PublishPipelineArtifact@1
-    #  inputs:
-    #    pathToPublish: $(System.DefaultWorkingDirectory)/build-windows-x86_64
-    #    artifactName: WebRTC-static-windows-x86_64
-
-    #- task: NuGetCommand@2
-    #  inputs:
-    #    command: pack
-    #    versioningScheme: byPrereleaseNumber
-    #    majorVersion: '$(Major)'
-    #    minorVersion: '$(Minor)'
-    #    patchVersion: '$(Patch)'
-    #    packagesToPack: $(System.DefaultWorkingDirectory)/build-windows-x86_32
+        path: $(System.DefaultWorkingDirectory)/build-windows-x86_64
+        artifact: WebRTC-static-windows-x86_64
+        
+    - task: CopyFiles@2
+      inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/include'
+      Contents: '**'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/include'
+      CleanTargetFolder: true
+      preserveTimestamp: true
+      
+      
+    - task: CopyFiles@2
+      inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_32/lib'
+      Contents: 
+        webrtc.lib
+        webrtc-common.lib
+      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/Win32/Release'
+      CleanTargetFolder: true
+      preserveTimestamp: true
+    
+    - task: CopyFiles@2
+      inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/build-windows-x86_64/lib'
+      Contents: 
+        webrtc.lib
+        webrtc-common.lib
+      TargetFolder: '$(System.DefaultWorkingDirectory)/build/native/x64/Release'
+      CleanTargetFolder: true
+      preserveTimestamp: true
+    
+    
